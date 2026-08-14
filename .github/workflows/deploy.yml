@@ -1,0 +1,36 @@
+name: "Deploy Godot 4 Web Build to GitHub Pages"
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  export_web:
+    group: eb-deploy
+    runs-on: ubuntu-latest
+    name: Export Web Project
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Godot Web Export
+        uses: firebelley/godot-export@v5.2.1
+        with:
+          godot_version: 4.2.2
+          godot_channel: stable
+          export_debug: false
+          relative_project_path: ./
+          archive_output: false
+
+      - name: Deploy to GitHub Pages
+        uses: PeaceIris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+          force_orphan: true
+          
