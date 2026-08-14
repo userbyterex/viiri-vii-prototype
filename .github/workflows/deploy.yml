@@ -31,7 +31,14 @@ jobs:
       - name: Prepare HTML5 Files
         run: |
           mkdir -p deploy_web
-          find /home/runner/.local/share/godot/exports/ -type f -exec cp {} deploy_web/ \;
+          # Find the exact folder where Godot dumped the web build
+          WASM_FILE=$(find . -name "*.wasm" | head -n 1)
+          EXPORT_DIR=$(dirname "$WASM_FILE")
+          
+          # Copy files to the deployment folder
+          cp -a "$EXPORT_DIR"/. deploy_web/
+          
+          # Force rename to index.html to prevent 404 errors
           cd deploy_web
           html_file=$(ls *.html | head -n 1)
           if [ -n "$html_file" ] && [ "$html_file" != "index.html" ]; then
