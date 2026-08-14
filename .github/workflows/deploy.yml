@@ -1,25 +1,26 @@
-name: "Deploy Godot 4 Web Build to GitHub Pages"
+name: "Deploy Viiri VII Web Build"
 
 on:
   push:
     branches:
       - main
-      - master
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 jobs:
-  export_web:
+  deploy:
     runs-on: ubuntu-latest
-    name: Export Web Project
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Godot Web Export
+      - name: Export Web Project
         uses: firebelley/godot-export@v5.2.1
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
@@ -27,20 +28,22 @@ jobs:
           relative_project_path: ./
           archive_output: false
 
-      - name: Ensure index.html exists
+      - name: Prepare HTML5 Files
         run: |
-          cd build/web
-          if [ ! -f index.html ]; then
-            first_html=$(ls *.html | head -n 1)
-            if [ -n "$first_html" ]; then
-              mv "$first_html" index.html
-            fi
+          mkdir -p deploy_web
+          find /home/runner/.local/share/godot/exports/ -type f -exec cp {} deploy_web/ \;
+          cd deploy_web
+          html_file=$(ls *.html | head -n 1)
+          if [ -n "$html_file" ] && [ "$html_file" != "index.html" ]; then
+            mv "$html_file" index.html
           fi
 
-      - name: Deploy to GitHub Pages
-        uses: PeaceIris/actions-gh-pages@v3
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
-          force_orphan: true
-          
+          path: deploy_web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        
