@@ -21,11 +21,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Godot
+      - name: Setup Godot + Export Templates
         uses: chickensoft-games/setup-godot@v2
         with:
           version: 4.2.2
           use-dotnet: false
+          include-templates: true   # ← Esto es lo que faltaba
 
       - name: Verify Godot
         run: godot --version
