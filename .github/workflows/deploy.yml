@@ -27,23 +27,47 @@ jobs:
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_export_templates.tpz
           relative_project_path: ./
           archive_output: false
+          export_name: Web
 
       - name: Prepare HTML5 Files
         run: |
+          echo "=== Buscando archivos exportados ==="
+          find . -name "*.wasm" -o -name "*.html" -o -name "*.js" | head -20
+          
           mkdir -p deploy_web
-          # Find the exact folder where Godot dumped the web build
+          
+          # Buscar el .wasm
           WASM_FILE=$(find . -name "*.wasm" | head -n 1)
-          EXPORT_DIR=$(dirname "$WASM_FILE")
           
-          # Copy files to the deployment folder
-          cp -a "$EXPORT_DIR"/. deploy_web/
-          
-          # Force rename to index.html to prevent 404 errors
-          cd deploy_web
-          html_file=$(ls *.html | head -n 1)
-          if [ -n "$html_file" ] && [ "$html_file" != "index.html" ]; then
-            mv "$html_file" index.html
+          if [ -z "$WASM_FILE" ]; then
+            echo "ERROR: No se encontró ningún archivo .wasm"
+            echo "Contenido del directorio:"
+            ls -la
+            exit 1
           fi
+          
+          EXPORT_DIR=$(dirname "$WASM_FILE")
+          echo "Carpeta de exportación encontrada: $EXPORT_DIR"
+          
+          # Copiar todo el contenido de la carpeta de exportación
+          cp -a "$EXPORT_DIR"/* deploy_web/ 2>/dev/null || cp -a "$EXPORT_DIR"/. deploy_web/
+          
+          # Asegurar que exista index.html
+          cd deploy_web
+          if [ ! -f "index.html" ]; then
+            html_file=$(ls *.html 2>/dev/null | head -n 1)
+            if [ -n "$html_file" ]; then
+              mv "$html_file" index.html
+              echo "Renombrado $html_file → index.html"
+            else
+              echo "ERROR: No se encontró ningún archivo HTML"
+              ls -la
+              exit 1
+            fi
+          fi
+          
+          echo "=== Contenido final de deploy_web ==="
+          ls -la
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
