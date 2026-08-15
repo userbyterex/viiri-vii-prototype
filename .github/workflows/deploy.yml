@@ -26,10 +26,7 @@ jobs:
         with:
           version: 4.2.2
           use-dotnet: false
-          include-templates: true   # ← Esto es lo que faltaba
-
-      - name: Verify Godot
-        run: godot --version
+          include-templates: true
 
       - name: Export Web Build
         run: |
@@ -37,6 +34,19 @@ jobs:
           godot --headless --export-release "Web" build/web/index.html
           echo "=== Contenido de build/web ==="
           ls -la build/web
+
+      - name: Add COI Service Worker (fix for GitHub Pages)
+        run: |
+          cd build/web
+          
+          # Descargar el service worker
+          curl -sL https://raw.githubusercontent.com/gzuidhof/coi-serviceworker/master/coi-serviceworker.js -o coi-serviceworker.js
+          
+          # Inyectar el script en el index.html (justo después de <head>)
+          sed -i 's|<head>|<head>\n<script src="coi-serviceworker.js"></script>|' index.html
+          
+          echo "=== index.html modificado ==="
+          head -n 20 index.html
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
