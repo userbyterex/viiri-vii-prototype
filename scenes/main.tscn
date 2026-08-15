@@ -18,17 +18,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0666667, 0.0862745, 0.117647, 1)
+color = Color(0.05, 0.06, 0.09, 1)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -39,45 +39,64 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
+theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 20
 
 [node name="VBox" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 16
 
 [node name="Title" type="Label" parent="Panel/MarginContainer/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "VIIRI VII: PARASITE CORE (Web Prototype)"
+theme_override_colors/font_color = Color(0.75, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "VIIRI VII  —  PARASITE CORE"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "Oakhaven Prime  ·  Reactor Sector 03"
 horizontal_alignment = 1
 
 [node name="HBox" type="HBoxContainer" parent="Panel/MarginContainer/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 20
+theme_override_constants/separation = 28
 
 [node name="VesperPanel" type="VBoxContainer" parent="Panel/MarginContainer/VBox/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 6
 
 [node name="Name" type="Label" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.95, 1, 1)
 theme_override_font_sizes/font_size = 20
-text = "Vesper (Mercenary)"
+text = "VESPER"
+
+[node name="Role" type="Label" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.7, 0.85, 1)
+theme_override_font_sizes/font_size = 13
+text = "Infected Swordsman  ·  Ex-Corporate Asset"
 
 [node name="HPText" type="Label" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "HP: 100 / 100"
 
 [node name="InfectionText" type="Label" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
-text = "Parasite Infection: 15%"
+theme_override_font_sizes/font_size = 15
+text = "Parasite Infection: 12%"
 
 [node name="LimitText" type="Label" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 15
 text = "Limit Break: 0%"
 
 [node name="Spacer" type="Control" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
@@ -86,38 +105,51 @@ size_flags_vertical = 3
 
 [node name="ActionTitle" type="Label" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
-text = "Select Action:"
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+text = "Select Action"
 
 [node name="AttackButton" type="Button" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
-text = "1. Basic Attack (Heavy Sidearm)"
+text = "1. Blade Slash"
 
 [node name="SkillButton" type="Button" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
-text = "2. Tech-Parasite Magic (+Infection)"
+text = "2. Parasite Slash  (+Infection)"
 
 [node name="LimitButton" type="Button" parent="Panel/MarginContainer/VBox/HBox/VesperPanel"]
 layout_mode = 2
-text = "3. LIMIT BREAK (Core Despertar)"
+text = "3. LIMIT BREAK — Core Despertar"
 
 [node name="EnemyPanel" type="VBoxContainer" parent="Panel/MarginContainer/VBox/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 6
 
 [node name="Name" type="Label" parent="Panel/MarginContainer/VBox/HBox/EnemyPanel"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.55, 0.55, 1)
 theme_override_font_sizes/font_size = 20
-text = "Target: Biomechanical Sentinel"
+text = "BIOMECHANICAL SENTINEL"
+
+[node name="Role" type="Label" parent="Panel/MarginContainer/VBox/HBox/EnemyPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.45, 0.45, 1)
+theme_override_font_sizes/font_size = 13
+text = "Corporate Security Unit  ·  Class-B"
 
 [node name="EnemyHPText" type="Label" parent="Panel/MarginContainer/VBox/HBox/EnemyPanel"]
 layout_mode = 2
-text = "Sentinel HP: 250 / 250"
+theme_override_font_sizes/font_size = 16
+text = "Sentinel HP: 280 / 280"
 
 [node name="LogLabel" type="Label" parent="Panel/MarginContainer/VBox"]
-custom_minimum_size = Vector2(0, 180)
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.78, 0.85, 0.92, 1)
 theme_override_font_sizes/font_size = 14
 autowrap_mode = 3
+text = ""
 
 [connection signal="pressed" from="Panel/MarginContainer/VBox/HBox/VesperPanel/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBox/HBox/VesperPanel/SkillButton" to="." method="_on_skill_button_pressed"]
