@@ -1,4 +1,4 @@
-name: "Deploy Viiri VII Web Build"
+name: "Deploy Viiri VII 3D Web Build"
 
 on:
   push:
@@ -35,18 +35,18 @@ jobs:
           echo "=== Contenido de build/web ==="
           ls -la build/web
 
-      - name: Add COI Service Worker (fix for GitHub Pages)
+      - name: Add COI Service Worker (needed for GitHub Pages)
         run: |
           cd build/web
           
           # Descargar el service worker
           curl -sL https://raw.githubusercontent.com/gzuidhof/coi-serviceworker/master/coi-serviceworker.js -o coi-serviceworker.js
           
-          # Inyectar el script en el index.html (justo después de <head>)
+          # Inyectar el script en el index.html
           sed -i 's|<head>|<head>\n<script src="coi-serviceworker.js"></script>|' index.html
           
           echo "=== index.html modificado ==="
-          head -n 20 index.html
+          head -n 15 index.html
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
