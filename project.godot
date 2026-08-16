@@ -3,9 +3,9 @@ config_version=5
 [application]
 
 config/name="Viiri VII: Parasite Core"
-config/description="RPG Prototype in Cyberpunk + Dark Fantasy setting"
-run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.2", "Compatibility")
+config/description="3D Turn-based RPG Prototype - Cyberpunk + Dark Fantasy"
+run/main_scene="res://scenes/main_3d.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
@@ -18,5 +18,5 @@ window/stretch/aspect="keep"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_3d=2
+lights_and_shadows/directional_shadow/size=4096
